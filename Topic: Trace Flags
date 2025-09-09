@@ -1,0 +1,11 @@
+Topic: Trace Flags
+*********
+	1) what is trace flag 12310 used for in AG?
+	2) what are trace flags used for Deadlock - 1222, 1204
+	3) what is the use of trace flag 1117?
+	- forces all db files on each db to grow uniformly.
+	4) master db files has to be relocated to different drive. how do you perform this task?
+	5) min permission to execute 
+		- exec plan for SQL server query: SHOWPLAN
+		- run sql profiler: ALTER TRACE
+	6) how do you recover db from corruption?
