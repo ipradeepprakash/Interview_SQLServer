@@ -1,0 +1,70 @@
+
+Topic: Availability Groups:
+**********************
+	1)  on AG cluster, you create a login on primary node, how do you create on secondary node? since manually scripting the login from primary and executing on secondary will fail?
+	- use Rev_login script to script primary logins & create the required login on secondary.
+
+	2) with respect to Read-only workload, what are the differences you see in SQL 2012/2014 & in SQL server 2016, later.
+	Read workloads will be driected to Read-only replica by listener by using Routing list.
+
+	3) how to apply SP on always on AG?
+	»    Disable automatic failover.
+	»    First install the service pack in secondary replica.
+	»    Wait until AlwaysOn Availability groups state becomes SYNCHRONIZED.
+	»    Manually failover the DB to the secondary replica.
+	»    Now upgrade the earlier primary server.
+	»    Failover the DB to the initial primary server.
+	»    Make the AlwaysOn Availability groups state is SYNCHRONIZED at the end.
+
+	4) What is the difference between AlwaysOn Failover Cluster Instances and AlwaysOn Availability Groups (AOAG)?
+
+	- AlwaysOn Failover Cluster Instance needs shared storage between all of the nodes in the cluster.  Whereas AlwaysOn Availability Groups do not require shared disk storage for the server hosting the SQL Server.
+	- AlwaysOn Failover Cluster Instance is available on both SQL Server Standard and Enterprise Edition whereas we need Enterprise Edition to configure SQL Server AlwaysOn Availability Groups until SQL Server 2014. There is now an option to create a basic Availability Group with SQL Server 2016 Standard edition, but it has lot of limitations.
+	- SQL Server AlwaysOn Failover Clustered Instances work at an instance level whereas Availability Group works at a database level or for a set of databases.
+	- We cannot use AlwaysOn Failover Clustered Instances while installing standalone instances whereas Availability Groups can be configured on both standalone as well as SQL Server Clustered Instances.
+
+	5) how to add db files for a database in alwayson AG?
+		- First remove the database from the secondary replica. Now, the secondary database will be in a restoring state.
+		- Add the data file to your Availability database on the primary replica.
+		- Issue a transaction log backup of this availability database on the primary replica.
+		- Copy this transaction log backup to the secondary replica and restore it on its corresponding secondary replica using NORECOVERY and the WITH MOVE option.
+		- Now add the database back to AlwaysOn Availability Group.
+		
+		
+	6) How will you migrate a DB from standalone instance which is on 2017 instance with 4 TB to 2019
+	instance in less than 1 minute of downtime?
+	Ans: Firstly DAG was introduced from SQL 2016 and on 2016 we need the databases to be part of
+	Always ON.
+	However from SQL Server 2017 even for standalone machines we can configure DAG. You don't
+	need to configure even windows failover cluster for this and also no need for availability group
+	listener. As we are using DAG it transfers the log records instantly and once we are ready with the
+	cutover it is an instant flip.
+
+	7) Can we configure Log shipping to/from Azure Managed instance?
+	Ans: We can't configure traditional log shipping....You may ask why because we need to place the
+	backups on to storage container so we should use backups to URL and while restoring
+	RESTORE ... FROM URL will implicitly add WITH RECOVERY and so there will be no opportunity for
+	logs to be applied after the initial restore.
+	The option is to use Log replay Service which runs almost similar to the Log shipping in On-premises.
+
+	8) Suppose I have 3 nodes using Node Majority configuration and because of some unforeseen
+	issues say 2 nodes went down at the same time then what will happen to our Always ON Databases?
+	Ans: Microsoft has done various enhancements to the quorum right from windows 2003. With
+	windows 2012 we have the concept of Dynamic quorum and with 2012 R2 we have Dynamic
+	witness. However all of these work only if the servers are turned off using graceful approach. If it is
+	ungraceful shutdown like what we have in the question then to prevent the split Brain situation the
+	windows cluster would shutdown itself. To resolve this we need to make use of Force quorum.
+	Below are the steps for single site or Multi site
+	(i) Log in to the only node that is up and running and then shutdown the cluster service -->Net stop
+	clussvc
+	(ii) Bring up cluster service with Forcequorum-->Net start clussvc /forcequorum
+	(iii) Failover AG to the node which is up now (as other 2 nodes are down) with Allow Data Loss--
+		>ALTER AVAILABILITY GROUP AGTest FORCE_FAILOVER_ALLOW_DATA_LOSS;
+	(iv) This will bring AG up and once the other 2 servers are backup you need to resume the data
+	movement	-->ALTER DATABASE [AGplaceHolder] SET HADR RESUME;
+
+	Note: Most importantly, be aware that log truncation will be delayed on a given primary database
+	while any of its secondary databases is suspended. Therefore, if the outage period is prolonged,
+	consider removing the failed replica from the AG to avoid running out of disk space due to log
+	truncation delay.
+
