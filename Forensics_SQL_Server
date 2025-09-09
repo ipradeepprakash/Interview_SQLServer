@@ -1,0 +1,16 @@
+
+who deleted?
+**************
+	*) how to find who deleted the rows in table?
+	- we need to read transaction log file to find info about the deleted rows and login associated with it.
+	- we can use below sys function fn_dblog to find transaction id, transaction sid
+		use <database1_name>
+		go    
+		fn_dblog(NULL, NULL) 
+		
+		-- get the transaction sid from above query.
+		USE MASTER
+		GO   
+		SELECT SUSER_SNAME(get transaction sid from above query)
+
+
