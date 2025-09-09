@@ -1,0 +1,7 @@
+Topic: policy based management
+************************
+	1) i want to implement a strategy for business that
+	- any user created stored prod should NOT start with 'SP_' 
+		: use policy based management for defining policy on create stored procedure, so any new procedure created will be checked prior to execution.
+
+
