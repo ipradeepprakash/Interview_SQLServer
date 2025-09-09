@@ -16,3 +16,16 @@ Topic: Clusters
 			*/
 2) when was the last time DBCC CHECKDB happned for specific db?
 	- DBCC DBINFO (<Database_name123>) with tableresults
+
+
+3) what are Cluster Aware applications
+	----------------------------
+		- SQL server Database services
+		- SQL Server Analysis services
+		
+4) what are Cluster UnAware applications
+	----------------------------
+		- SQL server Reporting services
+		- SQL Server Integration services
+		- SQL Server Notification services
+		
