@@ -1,0 +1,57 @@
+
+Topic: Scenario Based
+************************
+
+
+Scenario based questions to understand candidate's approach towards a problem/task
+-----------------------------------------------------------------------------------------
+Q1. Can you explain a situation where you had to deep dive into an issue within SQL server?
+What was the issue and how did you resolve it? (Besides technical, we can look for candidate's
+thought process and approach towards a problem)
+
+Q2. Application team complains they are unable to connect to SQL server and when you tried to
+connect to SQL server, you are unable to connect to it through SSMS as well. What further
+details would you analyze and how would you connect and resolve the application connectivity
+issue?
+
+From the answers to see if candidate is aware of
+
+. Other methods of connecting to SQL server (e.g .: SQLCMD)
+. Dedicated administrator connections in SQL
+. Blocking, SQL waits etc. in SQL server
+
+Q3. You have been asked to migrate a SQL server 2012 to SQL 2019. What would be your
+approach or what steps do you follow to ensure a successful migration?
+
+From the answers to see if candidate is aware of
+
+. Different migration/upgrade methods available in SQL server
+. The key objects involved in migration (like logins, Databases, user mapping, jobs and
+certificates etc.)
+. Backup/restore methodologies
+
+Follow up questions based on the answers
+
+Q4. On an always on Availability group instance, you have noticed the secondary is not
+synchronizing and database log file is growing in Primary. What would you do to prevent log
+filling up the disk and database becoming inaccessible?
+
+Q5. You are trying to shrink a log file and it is not releasing space? What could be the reason?
+What would be your further analysis and steps to shrink the file?
+
+Q6. Applications are timing out while connecting to Always on Listener on a multi subnet
+environment. What could be causing it and how do you troubleshoot and rectify?
+
+Q7. You have observed that the AG is in a resolving state after a failover was triggered. What
+could be some of the reasons? How do we troubleshoot?
+
+Q8. You have been asked to patch an Always on AG SQL server instance. What would be your
+patching approach to minimize the downtime for the application?
+
+Q9. You have observed a latency in your transactional replication. How do you troubleshoot and
+remediate?
+
+Q10. Assume there are full, differential and log backups were issued on database and now that
+the database is crashed and needs a point in time recovery. How will you perform a point in
+time recovery?
+
