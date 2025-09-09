@@ -1,0 +1,6 @@
+Topic: System Backups
+****************
+	1) can we change the Recovery model for MSDB database?
+	- Yes, for ex if there is frequent changes to existing job like adding steps, deleting steps, 
+		modifying then we can change the recovery model to Full Recovery model with Tlog backups scheduled in regular intervals.
+
