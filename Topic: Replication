@@ -1,0 +1,43 @@
+
+Topic: Replication
+*************
+	1 – how Can we Rename Publication Database?
+		Answer – No, we cannot rename publication database directly but if we want to rename any publication database then we need to drop the publications, rename the database and re-configure replication all over again. We cannot directly rename publication database.
+
+	2 – how Can we prevent DELETE commands to replicate on Subscriber that has executed on Publisher?
+		Answer – We can exclude DELETE commands to replicate on subscriber.
+
+	3 – I want to add a column in a table that has been marked for replication. I don’t want to replicate this column to subscribers. How can we do that?
+		Answer – we need to disable the replication of schema changes and then execute ALTER TABLE ADD statement.
+
+	4 - Is it possible to configure the replication where publisher is on 2019 instance and distributor on
+		SQL 2017 and subscriber on 2022 instance?
+		Ans: No it's not possible to configure. Because a publisher server version can't be greater than to
+		that of Distributor.
+		Always remember our publisher server version should be <=Distributor server version.
+
+	5 - How will you get to know if the latency in replication is happening from Publisher to Distributor or
+	from Distributor to Subscriber?
+		Ans: By Inserting tracker tokens we can figure out where the latency is as in transactional replication
+		apart from the snapshot agent which is used for initial sync. The other 2 agents Log reader and
+		distributor agent will run continuously (can be tweaked based on our requirements) and we need to
+		see where the lag is. We need to figure out whether the problem is from Log reader agent to
+		Distributor or from Distributor to Subscriber
+
+
+	6) If you got to know that replication lag is happening from publisher to Distributor what will be your
+	steps to overcome that?
+		Ans: Well internally there are 4 threads that runs when we configure replication.
+		Log Reader Agent Reader Thread – It scans the publisher database transaction log using sp_replcmds
+		Log Reader Agent writer Thread -Add the queued transactions to the Distribution database using
+		sp_MSadd_repl_commands
+		Distribution Agent Reader Thread – It finds the watermark from the table
+		Msreplication_subscriptions(on subscriber) and uses this information to retrieve pending commands
+		from the Distribution database. It basically uses the stored procedure sp_MSget_replcommands to
+		achieve it.
+		Distribution Agent Writer Thread – Writer thread uses the Batched RPC calls to write the information
+		to subscriber database.
+		When we have Log Reader Reader-Thread Latency then the possible causes are: High VLFS, Slow
+		Network I/O, Slow Read I/O and large batch of replicated transaction.
+		When we have Log Reader Writer-Thread Latency then the possible causes are: Blocking, High I/O,
+		Slow Write I/O and Slow Network I/O.
