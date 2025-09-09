@@ -1,0 +1,9 @@
+
+Topic: Backups
+**********
+	1) what is the difference b/w copy-only backup & full backup?
+	2) Can we take differential backup in the secondary replica of AlwaysOn Availability group?
+	»    No. We can only take a log and copy only FULL backups.
+	3) how to restore backup of database that has CDC enabled?
+	- restore with "keep_cdc" option 
+
