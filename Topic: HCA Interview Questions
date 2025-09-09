@@ -1,0 +1,53 @@
+
+
+
+Topic: HCA Interview Questions
+--------------------------
+
+DBA 1: Level 1
+--------------
+1. what is the diff btw Local Disk & SAN?
+2. what is CU (cummulative update)?
+
+DBA II: Level 2
+--------------
+What databases do you have experience with?
+What is an index and how do you create it?
+What is a fill factor and what is it default to?
+What is the primary key and what is a foreign key?
+How do you generate a basic query plan?
+How can you issue a full backup and not interrupt the LSNs?
+How can you validate whether a backup will restore successfully?
+What are the different database recovery models and how are they different?
+
+
+Sr DBA
+-----------
+What is your process when application teams are complaining about database performance?
+How do you go about tuning a SQL Server query?
+What are three options to rebuild indexes?
+Name 3 or more DBCC commands and their purpose.
+
+
+Consulting DBA
+-----------------
+Direct technical questions
+
+Q1. Difference between a check point and commit?
+Q2. How do you take a log backup without breaking the LSN?
+Q3. What are the different types of database recovery models in SQL server and how are they
+different?
+Q4. What would be your strategy for Temp DB backups?
+Q5. How do you determine Temp DB contention in SQL Server and how do you rectify it?
+Q6. What are the different phases of Database recovery?
+Q7. What are the types of SQL server replication and how are they different?
+Q8. Difference between a push vs Pull subscription?
+Q9. What is RPO/RTO when you consider setting up DR for SQL Server database?
+Q10. What is a Quorum in windows failover cluster? And what are the different quorum modes
+in Always on AG?
+Q11. Explain 2-3 common wait types that you have seen in SQL Server?
+Q12. Difference between a clustered and non-clustered index?
+Q13. What is the fill factor and what is it default to?
+Q14. What is an Index seek vs Index Scan?
+Q15. What causes an index fragmentation and how do you determine and rectify?
+
